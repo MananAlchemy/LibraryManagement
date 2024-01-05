@@ -1,19 +1,17 @@
 const Books = [
-  { Name: "The Great Gatsby", Price: 14.99, Rent: 1, Bought: 0 },
-  { Name: "To Kill a Mockingbird", Price: 12.49, Rent: 0, Bought: 1 },
-  { Name: "1984", Price: 10.99, Rent: 1, Bought: 0 },
-  { Name: "The Catcher in the Rye", Price: 11.79, Rent: 0, Bought: 1 },
+  { Name: "The Great Gatsby", Price: 14.99 },
+  { Name: "To Kill a Mockingbird", Price: 12.49 },
+  { Name: "1984", Price: 10.99 },
+  { Name: "The Catcher in the Rye" },
   {
     Name: "Harry Potter and the Sorcerer's Stone",
     Price: 19.99,
-    Rent: 1,
-    Bought: 0,
   },
-  { Name: "The Hobbit", Price: 15.99, Rent: 0, Bought: 1 },
-  { Name: "Pride and Prejudice", Price: 9.99, Rent: 1, Bought: 0 },
-  { Name: "The Lord of the Rings", Price: 29.99, Rent: 0, Bought: 1 },
-  { Name: "The Da Vinci Code", Price: 13.49, Rent: 1, Bought: 0 },
-  { Name: "The Hunger Games", Price: 14.99, Rent: 0, Bought: 1 },
+  { Name: "The Hobbit", Price: 15.99 },
+  { Name: "Pride and Prejudice", Price: 9.99 },
+  { Name: "The Lord of the Rings", Price: 29.99 },
+  { Name: "The Da Vinci Code", Price: 13.49 },
+  { Name: "The Hunger Games", Price: 14.99 },
 ];
 
 // localStorage.setItem("Books", JSON.stringify(Books));

@@ -149,6 +149,7 @@
         return button;
       }
 
+      // Rent Books Logic is here
       function rentBook(book) {
         // Prompt the user to enter rental time period
         const rentalHours = prompt(
@@ -167,7 +168,12 @@
             bookName: book.Name,
             rentalHours: parseInt(rentalHours),
             rentalDate: new Date().toISOString(),
+            User: currentUser.Email,
           };
+
+          console.log(currentUser);
+          currentUser.Books.Rent.push(rentalInfo);
+          console.log(currentUser);
           // console.log({
           //   bookName: book.Name,
           //   rentalHours: parseInt(rentalHours),
@@ -199,7 +205,9 @@
           const rentedBookCard = createRentedBookCard(rentalInfo);
           rentedBooksContainer.appendChild(rentedBookCard);
 
-          console.log(`Book "${book.Name}" rented for ${rentalHours} hours!`);
+          console.log(
+            `Book "${book.Name}" rented for ${rentalHours} hours! by ${currentUser.Name}`
+          );
         } else {
           console.error(`Invalid rental input for book "${book.Name}"!`);
         }
@@ -223,7 +231,9 @@
         const rentalDetails = document.createElement("p");
         rentalDetails.textContent = `Rented for ${
           rentalInfo.rentalHours
-        } hours on ${new Date(rentalInfo.rentalDate).toLocaleString()}`;
+        } hours on ${new Date(rentalInfo.rentalDate).toLocaleString()} by ${
+          currentUser.Email
+        }`;
 
         rentedBookCard.appendChild(title);
         rentedBookCard.appendChild(rentalDetails);
@@ -244,7 +254,16 @@
 
           if (bookIndex !== -1) {
             // Remove the book from the array
+
             const [boughtBook] = books.splice(bookIndex, 1);
+
+            let Bought_books =
+              JSON.parse(localStorage.getItem("Bought_books")) || [];
+            Bought_books.push({
+              Book: boughtBook,
+              Owner: currentUser.Email,
+            });
+            localStorage.setItem("Bought_books", JSON.stringify(Bought_books));
 
             // Update the localStorage with the modified array
             localStorage.setItem("Books", JSON.stringify(books));
