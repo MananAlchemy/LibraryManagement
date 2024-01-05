@@ -171,9 +171,9 @@
             User: currentUser.Email,
           };
 
-          console.log(currentUser);
+          // console.log(currentUser);
           currentUser.Books.Rent.push(rentalInfo);
-          console.log(currentUser);
+          // console.log(currentUser);
           // console.log({
           //   bookName: book.Name,
           //   rentalHours: parseInt(rentalHours),
@@ -204,6 +204,15 @@
           const rentedBooksContainer = document.getElementById("rentedBooks");
           const rentedBookCard = createRentedBookCard(rentalInfo);
           rentedBooksContainer.appendChild(rentedBookCard);
+
+          // const storedRentedBooks = localStorage.getItem("RentedBooks");
+          if (storedRentedBooks) {
+            const rentedBooks = JSON.parse(storedRentedBooks);
+            rentedBooks.forEach((rentedBook) => {
+              const rentedBookCard = createRentedBookCard(rentedBook);
+              rentedBooksContainer.appendChild(rentedBookCard);
+            });
+          }
 
           console.log(
             `Book "${book.Name}" rented for ${rentalHours} hours! by ${currentUser.Name}`
@@ -270,9 +279,16 @@
 
             // Display the bought book in the bought books section
             const boughtBooksContainer = document.getElementById("boughtBooks");
-            const boughtBookCard = createBookCard(boughtBook, true); // Pass true to indicate it's a bought book
-            boughtBookCard.classList.add("bought-book-card"); // Add a class for styling
-            boughtBooksContainer.appendChild(boughtBookCard);
+            // boughtBooksContainer.innerHTML = "";
+            const storedBoughtBooks = localStorage.getItem("Bought_books");
+            if (storedBoughtBooks) {
+              const boughtBooks = JSON.parse(storedBoughtBooks);
+              boughtBooks.forEach((boughtBook) => {
+                console.log(boughtBook.Book);
+                const boughtBookCard = createBoughtBookCard(boughtBook);
+                boughtBooksContainer.appendChild(boughtBookCard);
+              });
+            }
 
             console.log(
               `Book "${book.Name}" bought and moved to bought books section!`
@@ -291,10 +307,10 @@
         boughtBookCard.classList.add("bought-book-card");
 
         const title = document.createElement("h3");
-        title.textContent = boughtBook.Name;
+        title.textContent = boughtBook.Book.Name;
 
         const price = document.createElement("p");
-        price.textContent = `Price: $${boughtBook.Price}`;
+        price.textContent = `Price: $${boughtBook.Book.Price}`;
 
         boughtBookCard.appendChild(title);
         boughtBookCard.appendChild(price);

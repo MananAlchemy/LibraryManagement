@@ -2,7 +2,7 @@ const Books = [
   { Name: "The Great Gatsby", Price: 14.99 },
   { Name: "To Kill a Mockingbird", Price: 12.49 },
   { Name: "1984", Price: 10.99 },
-  { Name: "The Catcher in the Rye" },
+  { Name: "The Catcher in the Rye", Price: 10.99 },
   {
     Name: "Harry Potter and the Sorcerer's Stone",
     Price: 19.99,
@@ -14,7 +14,7 @@ const Books = [
   { Name: "The Hunger Games", Price: 14.99 },
 ];
 
-// localStorage.setItem("Books", JSON.stringify(Books));
+localStorage.setItem("Books", JSON.stringify(Books));
 
 $(document).ready(function () {
   let allBooks = JSON.parse(localStorage.getItem("Books")) || [];
