@@ -30,7 +30,7 @@ $(document).ready(function () {
         <td> ${product.Password} </td>
         <td> ${product.Gender} </td>
         <td><button class="deleteBtn btn btn-danger" data-id="${product.Email}">Delete</button></td>
-        <td><a href="edit.html?email=${product.Email}" class="btn btn-primary">Edit</a></td>
+        <td><a href="editUser.html?email=${product.Email}" class="btn btn-primary">Edit</a></td>
   
   
         <br>

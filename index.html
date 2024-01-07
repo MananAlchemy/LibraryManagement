@@ -4,94 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login/Signup Page</title>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f2f2f2;
-      }
-
-      .container {
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        width: 400px;
-      }
-
-      .tab {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 20px;
-      }
-
-      .tab button {
-        background-color: #3498db;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        padding: 10px;
-        font-size: 16px;
-        border-bottom: 2px solid #3498db;
-        transition: 0.3s;
-      }
-
-      .tab button:hover {
-        border-bottom: 2px solid #3498db;
-      }
-
-      .content {
-        padding: 20px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      label {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 8px;
-        color: #333;
-      }
-
-      input {
-        width: 100%;
-        padding: 10px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-top: 5px;
-        font-size: 16px;
-      }
-
-      button {
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-
-      button:hover {
-        background-color: #2184c4;
-      }
-    </style>
+    <link rel="stylesheet" href="./styles/index.css" />
   </head>
   <body>
+    <!-- Making main container -->
     <div class="container">
+      <h1 class="heading">E-Library</h1>
       <div class="tab">
-        <button onclick="showTab('login')">Login</button>
-        <button onclick="showTab('signup')">Sign Up</button>
+        <a href="#login" onclick="showTab('login')">Login</a>
+        <a href="#signup" onclick="showTab('signup')">Sign Up</a>
       </div>
 
+      <!-- Inside content of greyish box -->
       <div class="content">
         <div id="login" class="tab-content">
           <div class="form-group">
@@ -111,7 +35,6 @@
 
         <div id="signup" class="tab-content" style="display: none">
           <div class="form-group">
-            <label for="signupName">Name:</label>
             <input type="text" id="signupName" placeholder="Enter your name" />
           </div>
           <div class="form-group">
@@ -143,81 +66,5 @@
       </div>
     </div>
   </body>
-  <script>
-    // console.log(userData);
-
-    console.log("Manan");
-    function showTab(tabName) {
-      console.log("showTab");
-      var tabs = document.getElementsByClassName("tab-content");
-      for (var i = 0; i < tabs.length; i++) {
-        tabs[i].style.display = "none";
-      }
-      document.getElementById(tabName).style.display = "block";
-    }
-
-    function login() {
-      let userData = JSON.parse(localStorage.getItem("user_data")) || [];
-      var email = document.getElementById("loginEmail").value;
-      var password = document.getElementById("loginPassword").value;
-      console.log(email, password);
-      let loggedIn_user = userData.filter((profile) => {
-        return profile.Email == email && profile.Password == password;
-      });
-      console.log(loggedIn_user);
-
-      if (loggedIn_user.length > 0) {
-        redirect(email);
-      } else {
-        alert("User Not found");
-      }
-      // Add your login logic here
-      //   alert("Login button clicked");
-    }
-
-    function signup(event) {
-      console.log("Here");
-      let userData = JSON.parse(localStorage.getItem("user_data")) || []; // Initialize as an array
-      var name = document.getElementById("signupName").value;
-      var email = document.getElementById("signupEmail").value;
-      var password = document.getElementById("signupPassword").value;
-      var gender = document.getElementById("signupGender").value;
-
-      // Simple client-side validation
-
-      filterEmail = userData.filter((profile) => profile.Email === email);
-      if (filterEmail.length > 0) {
-        alert("User already exists");
-      } else {
-        if (name === "" || email === "" || password === "") {
-          alert("Please fill in all fields.");
-        } else {
-          console.log("Here");
-          var newData = {
-            Name: name,
-            Email: email,
-            Gender: gender,
-            Password: password,
-            Books: { Rent: [], Bought: [] },
-          };
-
-          userData.push(newData); // Append data to the array
-          localStorage.setItem("user_data", JSON.stringify(userData)); // Use consistent key
-          // Add your signup logic here
-          document.getElementById("signupName").value = "";
-          document.getElementById("signupEmail").value = "";
-          document.getElementById("signupPassword").value = "";
-          document.getElementById("signupGender").value = "male";
-
-          redirect(email);
-        }
-      }
-    }
-
-    function redirect(email) {
-      window.location.href = `afterlogin.html?email=${email}`;
-    }
-
-    //   showTab("login"); // Show login tab by default
-  </script>
+  <script src="./Scripts/index.js"></script>
 </html>

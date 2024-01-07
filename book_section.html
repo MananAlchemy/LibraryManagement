@@ -64,6 +64,34 @@
         background-color: #3498db;
         color: #fff;
       }
+      .bought-book-card {
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .bought-book-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: scale(1.02);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+      }
+      .rented-book-card {
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .rented-book-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transform: scale(1.02);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+      }
     </style>
   </head>
   <body>
@@ -104,7 +132,7 @@
         }
       }
 
-      function createBookCard(book, isBought = false) {
+      function createBookCard(book, isBought = false, isRented = false) {
         const bookCard = document.createElement("div");
         bookCard.classList.add("book-card");
 
@@ -121,10 +149,22 @@
           buyBook(book)
         );
 
+        const storedRentedBooks = localStorage.getItem("RentedBooks");
+        const rentedBooks = storedRentedBooks
+          ? JSON.parse(storedRentedBooks)
+          : [];
+
+        let isRented_length = rentedBooks.filter((product) => {
+          product.Name === book.Name;
+        });
+        if (isRented_length.length > 0) {
+          isRented = true;
+        }
+
         bookCard.appendChild(title);
         bookCard.appendChild(price);
 
-        if (!isBought) {
+        if (!isBought || !isRented) {
           const rentButton = createButton("Rent", "rent-button", () =>
             rentBook(book)
           );
@@ -201,18 +241,8 @@
           localStorage.setItem("RentedBooks", JSON.stringify(rentedBooks));
 
           // Display the rented book in the rented books section
-          const rentedBooksContainer = document.getElementById("rentedBooks");
-          const rentedBookCard = createRentedBookCard(rentalInfo);
-          rentedBooksContainer.appendChild(rentedBookCard);
 
-          // const storedRentedBooks = localStorage.getItem("RentedBooks");
-          if (storedRentedBooks) {
-            const rentedBooks = JSON.parse(storedRentedBooks);
-            rentedBooks.forEach((rentedBook) => {
-              const rentedBookCard = createRentedBookCard(rentedBook);
-              rentedBooksContainer.appendChild(rentedBookCard);
-            });
-          }
+          displayRentedBooks();
 
           console.log(
             `Book "${book.Name}" rented for ${rentalHours} hours! by ${currentUser.Name}`
@@ -241,7 +271,7 @@
         rentalDetails.textContent = `Rented for ${
           rentalInfo.rentalHours
         } hours on ${new Date(rentalInfo.rentalDate).toLocaleString()} by ${
-          currentUser.Email
+          rentalInfo.User
         }`;
 
         rentedBookCard.appendChild(title);
@@ -278,17 +308,8 @@
             localStorage.setItem("Books", JSON.stringify(books));
 
             // Display the bought book in the bought books section
-            const boughtBooksContainer = document.getElementById("boughtBooks");
-            // boughtBooksContainer.innerHTML = "";
-            const storedBoughtBooks = localStorage.getItem("Bought_books");
-            if (storedBoughtBooks) {
-              const boughtBooks = JSON.parse(storedBoughtBooks);
-              boughtBooks.forEach((boughtBook) => {
-                console.log(boughtBook.Book);
-                const boughtBookCard = createBoughtBookCard(boughtBook);
-                boughtBooksContainer.appendChild(boughtBookCard);
-              });
-            }
+
+            displayBoughtBooks();
 
             console.log(
               `Book "${book.Name}" bought and moved to bought books section!`
@@ -317,6 +338,39 @@
 
         return boughtBookCard;
       }
+
+      function displayRentedBooks() {
+        const rentedBooksContainer = document.getElementById("rentedBooks");
+        rentedBooksContainer.innerHTML = "";
+
+        const storedRentedBooks = localStorage.getItem("RentedBooks");
+
+        if (storedRentedBooks) {
+          const rentedBooks = JSON.parse(storedRentedBooks);
+          rentedBooks.forEach((rentedBook) => {
+            const rentedBookCard = createRentedBookCard(rentedBook);
+            rentedBooksContainer.appendChild(rentedBookCard);
+          });
+        }
+        makebooks();
+      }
+
+      function displayBoughtBooks() {
+        const boughtBooksContainer = document.getElementById("boughtBooks");
+        boughtBooksContainer.innerHTML = "";
+
+        const storedBoughtBooks = localStorage.getItem("Bought_books");
+
+        if (storedBoughtBooks) {
+          const boughtBooks = JSON.parse(storedBoughtBooks);
+          boughtBooks.forEach((boughtBook) => {
+            const boughtBookCard = createBoughtBookCard(boughtBook);
+            boughtBooksContainer.appendChild(boughtBookCard);
+          });
+        }
+      }
+
+      // displayRentedBooks();
 
       makebooks();
     </script>
